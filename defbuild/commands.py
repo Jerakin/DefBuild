@@ -127,12 +127,6 @@ def listen(project):
         sys.exit(-1)
 
 
-def update():
-    logging.info("Updating builder")
-    command = "git --work-tree={0} --git-dir=/{0}/.git pull origin master".format(os.path.dirname(__file__)).split()
-    call(command)
-
-
 def resolve(project):
     if project.skip_auth:
         user, pw = "", ""  # TODO: Add skip auth

@@ -202,8 +202,6 @@ def init():
     sub_bob.add_argument("-f", "--force", help="force download of bob", action='store_true', dest="force")
     sub_bob.add_argument("--set", help="download a specific version of bob", dest="set")
 
-    sub_parsers.add_parser("update")
-
     sub_resolve = sub_parsers.add_parser("resolve")
     sub_resolve.add_argument("-s", "--skip-auth", help="skips auth by using fake credentials", action='store_true', dest="skip_auth")
 
