@@ -239,6 +239,7 @@ def _merge_properties(project_file, properties_file):
 def init():
     parser = argparse.ArgumentParser(description='Builder')
     sub_parsers = parser.add_subparsers(dest="command")
+    parser.add_argument('--version', action='version', version="DefBuild {}".format(__version__))
 
     sub_build = sub_parsers.add_parser("build")
     sub_build.add_argument("project", help="working directory to project")
