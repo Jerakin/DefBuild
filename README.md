@@ -9,11 +9,11 @@ that you can't use the iOS installation/build capabilities on a windows machine.
 
 #### Dependencies
 
-Python 3.2+ `brew install python3`
+[Python 3.2+](https://www.python.org/) `brew install python3`
 
-adb `brew install android-platform-tools`
+[adb](https://developer.android.com/studio/command-line/adb) `brew install android-platform-tools`
 
-ideviceinstaller `brew install ideviceinstaller` (mac only)
+[ideviceinstaller](http://www.libimobiledevice.org/) `brew install ideviceinstaller`
 
 #### Install
 
