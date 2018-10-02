@@ -52,6 +52,9 @@ setup(
     entry_points={
         'console_scripts': ['builder=defbuild:main'],
     },
+    install_requires=[
+        'requests'
+    ],
     keywords='defbuild builder defold bob game development',
     packages=["defbuild"]
 )
