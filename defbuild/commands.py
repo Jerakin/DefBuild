@@ -10,7 +10,6 @@ from distutils.version import StrictVersion
 
 
 def build(project):
-    logging.info("Building project {}".format(project.name))
     if not project.bob:
         logging.error("Can't find a bob version, download with 'builder bob --update'")
         sys.exit(1)
@@ -45,6 +44,9 @@ def build(project):
 
     if not project.quick:
         command.extend(["distclean"])
+
+    logging.info("Building project {} as {}".format(project.name, project.variant))
+    logging.info("Using bob version {}".format(bob_version))
 
     command.extend(["build", "bundle"])
     start_time = time.time()
