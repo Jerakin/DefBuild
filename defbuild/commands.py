@@ -1,6 +1,6 @@
 import os
 import sys
-import bob as _bob
+import defbuild.bob as _bob
 import time
 import shutil
 import logging

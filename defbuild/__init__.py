@@ -75,8 +75,7 @@ Usage:
 import os
 import sys
 import logging
-import commands
-
+import defbuild.commands as commands
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 if not sys.version_info >= (3, 3):
@@ -236,31 +235,6 @@ def _merge_properties(project_file, properties_file):
         project.write(f)
 
 
-def main():
-    options = init()
-    project = Project(options)
-    try:
-        if options.command == "build":
-            commands.build(project)
-        elif options.command == "install":
-            commands.install(project)
-        elif options.command == "uninstall":
-            commands.uninstall(project)
-        elif options.command == "resolve":
-            commands.resolve(project)
-        elif options.command == "start":
-            commands.start(project)
-        elif options.command == "listen":
-            commands.listen(project)
-        elif options.command == "update":
-            commands.update()
-        elif options.command == "set":
-            commands.config_set(project, options)
-        elif options.command == "bob":
-            commands.bob(project, options)
-    finally:
-        project.final()
-
 
 def init():
     parser = argparse.ArgumentParser(description='Builder')
@@ -313,10 +287,40 @@ def init():
     return input_args
 
 
-if __name__ == '__main__':
+def run():
+    options = init()
+    project = Project(options)
     try:
-        main()
+        if options.command == "build":
+            commands.build(project)
+        elif options.command == "install":
+            commands.install(project)
+        elif options.command == "uninstall":
+            commands.uninstall(project)
+        elif options.command == "resolve":
+            commands.resolve(project)
+        elif options.command == "start":
+            commands.start(project)
+        elif options.command == "listen":
+            commands.listen(project)
+        elif options.command == "update":
+            commands.update()
+        elif options.command == "set":
+            commands.config_set(project, options)
+        elif options.command == "bob":
+            commands.bob(project, options)
+    finally:
+        project.final()
+
+
+def main():
+    try:
+        run()
     except KeyboardInterrupt:
         sys.exit()
     except:
         raise
+
+
+if __name__ == '__main__':
+    main()
