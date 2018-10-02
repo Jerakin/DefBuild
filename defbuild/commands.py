@@ -16,11 +16,11 @@ def build(project):
 
     command = ["java", "-jar", project.bob, "--archive", "--platform", project.platform, "--texture-compression", "true", "--bundle-output", project.output]
     bob_version = _bob.get_version_from_file_name(project.bob)
-    if bob_version.split(".") == 3 and StrictVersion(bob_version) >= StrictVersion("1.2.137"):
+    if len(bob_version.split(".")) == 3 and StrictVersion(bob_version) >= StrictVersion("1.2.137"):
         if project.variant == "debug":
             command.extend(["--variant", "debug"])
         else:
-            command.extend(["--variant", "release"])
+            command.extend(["--strip-executable"])
     else:
         if project.variant == "debug":
             command.extend(["--debug"])
