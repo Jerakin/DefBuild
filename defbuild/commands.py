@@ -44,9 +44,10 @@ def build(project):
 
     if not project.quick:
         command.extend(["distclean"])
-
-    logging.info("Building project {} as {}".format(project.name, project.variant))
-    logging.info("Using bob version {}".format(bob_version))
+        
+    platform = "android" if project.platform == "armv7-android" else "ios" if project.platform == "armv7-darwin" else ""
+    logging.info("Building project {} as {} for {}".format(project.name, project.variant, platform))
+    logging.info("Using bob version {}".format(bob_version, project.variant))
 
     command.extend(["build", "bundle"])
     start_time = time.time()
