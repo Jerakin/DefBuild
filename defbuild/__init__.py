@@ -208,11 +208,6 @@ def init():
     sub_resolve.add_argument("-s", "--skip-auth", help="skips auth by using fake credentials", action='store_true', dest="skip_auth")
 
     input_args = parser.parse_args()
-    try:
-        pass
-    except AttributeError:
-        logging.error("No command sent, use --help for usage")
-        sys.exit(1)
 
     return input_args
 
