@@ -1,76 +1,4 @@
 #!/usr/bin/env python
-"""
-Builder is built by wrapping bob, adb, ideviceinstaller and storing some data locally
-
-
-------------------------------------------------------------------------------------------
-Installation
-I would recommend to add an alias to your command line tool, that way you don't need to spell out the complete script.
-Create this alias in ~/.bash_profile alias builder="python3.5 /path/to/builder/builder_android.py"
-
-
-# Mac
-install brew
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-install python 3.2+
-brew install python3
-
-install python requests
-pip install requests
-
-install adb
-brew install android-platform-tools
-
-install ideviceinstaller
-brew install ideviceinstaller
-
-
-
-# Windows
-install python
-python.org
-
-install python requests
-pip install requests
-
-install adb
-goo.gl/3Rasvk
-
-You can't use the iOS installation capabilities on a windows machine :(
-
-
-------------------------------------------------------------------------------------------
-Usage:
-  builder.py [command] [arguments]
-
-Available Commands:
-  build      build [location of a project] [arguments]
-  install    install [path to APK]
-  uninstall  uninstall [bundle id]
-  start      start [bundle id]
-  listen     listen
-  bob        bob arguments
-  set        set [key, value]
-  update     updates builder by pulling the latest changes from master
-
-bob arguments:
-  --update   Updates bob to the latest version
-  --set      Updates bob to the specified version, takes either a sha1 or version in format '1.2.117'
-  --force    Forces bob to download a new bob version, used with --update or --set
-
-
-Usage with set:
-  set is used for setting config values, it takes 2 arguments key and value
-  If you want to install and uninstall on iPhone both 'identity' and 'provision' needs to be set.
-  You can enable verbose output with 'verbose'
-
-Usage:
-  builder set identity 'iPhone Dev: Me'
-  builder set provision path/to/provision/game.mobileprovision
-  builder set verbose true
-
-"""
 
 import os
 import sys
@@ -94,7 +22,7 @@ except ImportError:
     logging.error("requests not found, install with `pip install requests`")
     sys.exit(1)
 
-__version__ = "3.0.0"
+__version__ = "1.0.0"
 
 
 class Project:
@@ -237,11 +165,11 @@ def _merge_properties(project_file, properties_file):
 
 
 def init():
-    parser = argparse.ArgumentParser(description='Builder')
+    parser = argparse.ArgumentParser(description='Commandline tool to build a Defold project')
     sub_parsers = parser.add_subparsers(dest="command")
     parser.add_argument('--version', action='version', version="DefBuild {}".format(__version__))
 
-    sub_build = sub_parsers.add_parser("build")
+    sub_build = sub_parsers.add_parser("build", help="Build a Defold project")
     sub_build.add_argument("project", help="working directory to project")
     sub_build.add_argument("-p", "--platform", help="which platform to build, 'ios' or 'android'", dest="platform", choices=["android", "ios"])
     sub_build.add_argument("-q", "--quick", help="option to do a quick build by skipping distclean",
@@ -252,12 +180,12 @@ def init():
     sub_build.add_argument("-r", "--report", help="which platform to build, 'ios' or 'android'", action="store_true", dest="report")
     sub_build.add_argument("--variant", help="specify debug or release of the engine", dest="variant", choices=["release", "debug"], default="debug")
 
-    sub_install = sub_parsers.add_parser("install")
+    sub_install = sub_parsers.add_parser("install", help="Install a project to a connected device")
     sub_install.add_argument("project", help="what to install", nargs="?")
     sub_install.add_argument("-f", "--force", help="force installation by uninstalling first", action='store_true', dest="force")
     sub_install.add_argument("-p", "--platform", help="which platform to install on, 'ios' or 'android'", nargs="?", dest="platform")
 
-    sub_uninstall = sub_parsers.add_parser("uninstall")
+    sub_uninstall = sub_parsers.add_parser("uninstall", help="Uninstall the Defold project on a connected device")
     sub_uninstall.add_argument("project", help="which app to uninstall", nargs="?")
     sub_uninstall.add_argument("-p", "--platform", help="which platform to uninstall, 'ios' or 'android'", nargs="?", dest="platform")
 
@@ -269,7 +197,7 @@ def init():
     sub_config.add_argument("key", help="key to update")
     sub_config.add_argument("value", help="the value to assign to key")
 
-    sub_bob = sub_parsers.add_parser("bob")
+    sub_bob = sub_parsers.add_parser("bob", help="Update or set the version of bob that is used")
     sub_bob.add_argument("-u", "--update", help="update bob", action='store_true', dest="update")
     sub_bob.add_argument("-f", "--force", help="force download of bob", action='store_true', dest="force")
     sub_bob.add_argument("--set", help="download a specific version of bob", dest="set")
@@ -311,6 +239,8 @@ def run():
             commands.config_set(project, options)
         elif options.command == "bob":
             commands.bob(project, options)
+        else:
+            commands.print_help()
     finally:
         project.final()
 

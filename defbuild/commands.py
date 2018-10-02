@@ -150,3 +150,13 @@ def config_set(project, command):
         setattr(project, command.key, command.value)
     else:
         logging.error("Attribute doesn't exists")
+
+
+def print_help():
+    print("Usage: builder <command> [<args>]\n")
+    print("Some useful commands are:")
+    print("    build      Use bob to build a Defold project")
+    print("    install    Install a project to a connected device")
+    print("    uninstall  Uninstall the Defold project on a connected device")
+    print("    bob        Update or set the version of bob that is used\n")
+    print("See `builder <command> --help' for information on a specific command.")
