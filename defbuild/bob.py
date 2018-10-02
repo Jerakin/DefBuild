@@ -2,7 +2,9 @@ import os
 import sys
 import requests
 import logging
-from json import load as j_load
+
+
+DEFOLD_VERSION_URL = "https://gist.githubusercontent.com/Jerakin/801f6a71121095c467eaae9689d41828/raw/2e95e14ddb4b893032fed98021ec5e8ef510631c/defold_version"
 
 
 def exists(project, sha):
@@ -64,12 +66,7 @@ def warning(project):
 
 
 def get_version_from_sha(sha):
-    v = os.path.join(os.path.dirname(__file__), "versions.json")
-    if not os.path.exists(v):
-        return sha
-
-    with open(v, "r") as f:
-        json_data = j_load(f)
+    json_data = requests.get(DEFOLD_VERSION_URL).json()
     for x in json_data["versions"]:
         if x["sha1"] == sha:
             return x["version"]
@@ -77,12 +74,7 @@ def get_version_from_sha(sha):
 
 
 def get_sha_from_version(version):
-    v = os.path.join(os.path.dirname(__file__), "versions.json")
-    if not os.path.exists(v):
-        return version
-
-    with open(v, "r") as f:
-        json_data = j_load(f)
+    json_data = requests.get(DEFOLD_VERSION_URL).json()
     for x in json_data["versions"]:
         if x["version"] == version:
             return x["sha1"]
