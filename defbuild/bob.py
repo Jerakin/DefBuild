@@ -78,3 +78,7 @@ def get_sha_from_version(version):
     for x in json_data["versions"]:
         if x["version"] == version:
             return x["sha1"]
+
+
+def get_version_from_file_name(file_name):
+    return get_version_from_sha(file_name.replace(".jar", "").split("bob_")[-1])

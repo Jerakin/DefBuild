@@ -6,6 +6,7 @@ import shutil
 import logging
 import requests
 from subprocess import call
+from distutils.version import StrictVersion
 
 
 def build(project):
@@ -14,7 +15,16 @@ def build(project):
         logging.error("Can't find a bob version, download with 'builder bob --update'")
         sys.exit(1)
 
-    command = ["java", "-jar", project.bob, "--archive", "--platform", project.platform, "--texture-compression", "true", "--debug", "--bundle-output", project.output]
+    command = ["java", "-jar", project.bob, "--archive", "--platform", project.platform, "--texture-compression", "true", "--bundle-output", project.output]
+    bob_version = _bob.get_version_from_file_name(project.bob)
+    if bob_version.split(".") == 3 and StrictVersion(bob_version) >= StrictVersion("1.2.137"):
+        if project.variant == "debug":
+            command.extend(["--variant", "debug"])
+        else:
+            command.extend(["--variant", "release"])
+    else:
+        if project.variant == "debug":
+            command.extend(["--debug"])
 
     if project.report:
         command.extend(["--build-report-html", os.path.join(project.cache_dir, "report.html")])

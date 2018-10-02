@@ -94,7 +94,7 @@ except ImportError:
     logging.error("requests not found, install with `pip install requests`")
     sys.exit(1)
 
-__version__ = "1.0.0"
+__version__ = "3.0.0"
 
 
 class Project:
@@ -110,6 +110,7 @@ class Project:
         self.report = arguments.report if hasattr(arguments, 'report') else None
         self.quick = arguments.quick if hasattr(arguments, 'quick') else None
         self.force = arguments.force if hasattr(arguments, 'force') else None
+        self.variant = arguments.variant if hasattr(arguments, 'variant') else None
         self.name = None
         self.provision = None
         self.identity = None
@@ -235,7 +236,6 @@ def _merge_properties(project_file, properties_file):
         project.write(f)
 
 
-
 def init():
     parser = argparse.ArgumentParser(description='Builder')
     sub_parsers = parser.add_subparsers(dest="command")
@@ -249,6 +249,7 @@ def init():
                                                    "commandline will be given precedence over the ones read from "
                                                    "the properties file", dest="options")
     sub_build.add_argument("-r", "--report", help="which platform to build, 'ios' or 'android'", action="store_true", dest="report")
+    sub_build.add_argument("--variant", help="specify debug or release of the engine", dest="variant", choices=["release", "debug"], default="debug")
 
     sub_install = sub_parsers.add_parser("install")
     sub_install.add_argument("project", help="what to install", nargs="?")
