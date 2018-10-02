@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Builder is built by wrapping adb, ideviceinstaller and storing some data locally
+Builder is built by wrapping bob, adb, ideviceinstaller and storing some data locally
 
 
 ------------------------------------------------------------------------------------------
@@ -51,13 +51,8 @@ Available Commands:
   start      start [bundle id]
   listen     listen
   bob        bob arguments
-  set        set [section, key, value]
+  set        set [key, value]
   update     updates builder by pulling the latest changes from master
-
-In addition to specify the location or id you can chose "this project" or "latest project" when supplying arguments to
- build, install, uninstall and start. By using "builder build ." you say "use this project" and with "builder build"
- you say "use latest project"
-
 
 bob arguments:
   --update   Updates bob to the latest version
@@ -66,16 +61,14 @@ bob arguments:
 
 
 Usage with set:
-  set is used for setting config values, it takes 3 arguments the section, key and value
+  set is used for setting config values, it takes 2 arguments key and value
   If you want to install and uninstall on iPhone both 'identity' and 'provision' needs to be set.
   You can enable verbose output with 'verbose'
-  You can set to always uninstall builds before installing with 'force_install'
 
 Usage:
-  builder set config identity 'iPhone Dev: Me'
-  builder set config provision path/to/provision/game.mobileprovision
-  builder set config verbose true
-  builder set config force_install true
+  builder set identity 'iPhone Dev: Me'
+  builder set provision path/to/provision/game.mobileprovision
+  builder set verbose true
 
 """
 

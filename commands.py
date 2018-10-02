@@ -5,7 +5,6 @@ import time
 import shutil
 import logging
 import requests
-import datetime
 from subprocess import call
 
 
