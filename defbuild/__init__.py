@@ -22,7 +22,7 @@ except ImportError:
     logging.error("requests not found, install with `pip install requests`")
     sys.exit(1)
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 
 class Project:
@@ -225,8 +225,6 @@ def run():
             commands.start(project)
         elif options.command == "listen":
             commands.listen(project)
-        elif options.command == "update":
-            commands.update()
         elif options.command == "set":
             commands.config_set(project, options)
         elif options.command == "bob":

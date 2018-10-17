@@ -51,10 +51,8 @@ Available Commands:
                      --force                    Forces bob to download a new bob version, used with --update or --set
                      
   set                [key, value]               See description below
- 
-  update                                        Updates builder by pulling the latest changes from master
   
-  resolve            --skip-auth                Skips auth by using fake credentials
+  resolve                                       Updates the dependencies
 ```
   
 
