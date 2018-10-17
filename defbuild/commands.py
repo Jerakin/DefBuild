@@ -129,12 +129,9 @@ def listen(project):
 
 
 def resolve(project):
-    if project.skip_auth:
-        user, pw = "", ""  # TODO: Add skip auth
-    else:
-        import getpass
-        user = input("User: ")
-        pw = getpass.getpass()
+    import getpass
+    user = input("User: ")
+    pw = getpass.getpass()
     command = ["java", "-jar", project.bob, "--email", user, "--auth", pw, "resolve"]
 
     call(command)
