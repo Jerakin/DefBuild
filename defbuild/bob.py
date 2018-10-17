@@ -4,7 +4,7 @@ import requests
 import logging
 
 
-DEFOLD_VERSION_URL = "https://gist.githubusercontent.com/Jerakin/801f6a71121095c467eaae9689d41828/raw/2e95e14ddb4b893032fed98021ec5e8ef510631c/defold_version"
+DEFOLD_VERSION_URL = "https://gist.githubusercontent.com/Jerakin/801f6a71121095c467eaae9689d41828/raw/"
 
 
 def exists(project, sha):
