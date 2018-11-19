@@ -133,7 +133,6 @@ def resolve(project):
     user = input("User: ")
     pw = getpass.getpass()
     command = ["java", "-jar", project.bob, "--email", user, "--auth", pw, "resolve"]
-
     call(command)
 
 
@@ -150,5 +149,7 @@ def print_help():
     print("    build      Use bob to build a Defold project")
     print("    install    Install a project to a connected device")
     print("    uninstall  Uninstall the Defold project on a connected device")
-    print("    bob        Update or set the version of bob that is used\n")
+    print("    bob        Update or set the version of bob that is used")
+    print("    config     Update config values, used for setting up iOS Provisional Profiles\n"
+          "               and others\n")
     print("See `builder <command> --help' for information on a specific command.")

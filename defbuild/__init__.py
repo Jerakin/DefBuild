@@ -22,7 +22,7 @@ except ImportError:
     logging.error("requests not found, install with `pip install requests`")
     sys.exit(1)
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 
 
 class Project:
@@ -193,7 +193,7 @@ def init():
 
     sub_parsers.add_parser("listen")
 
-    sub_config = sub_parsers.add_parser("set")
+    sub_config = sub_parsers.add_parser("config")
     sub_config.add_argument("key", help="key to update")
     sub_config.add_argument("value", help="the value to assign to key")
 

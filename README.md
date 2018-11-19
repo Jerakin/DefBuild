@@ -50,14 +50,14 @@ Available Commands:
                                                 version in format '1.2.117'
                      --force                    Forces bob to download a new bob version, used with --update or --set
                      
-  set                [key, value]               See description below
+  config             [key, value]               See description below
   
   resolve                                       Updates the dependencies
 ```
   
 
 
-### Set
+### Config
 set is used for setting config values, it takes 2 arguments key and value.
 
 If you want to install and uninstall on iPhone both 'identity' and 'provision' needs to be set.
