@@ -29,7 +29,7 @@ Usage:
   builder.py [command] [arguments]
  
 Available Commands:
-  build              [project location]         Project location specifed either a dot . or nothing
+  build              [project location]         Project location, use . for current folder
                      -p, --platform [arg]       For which platform you want to build ios/android
                      -q, --quick                Do a quickbuild by skipping distclean
                      -o, --options              Use a properties file to override or add values to the .project file
@@ -56,6 +56,22 @@ Available Commands:
 ```
   
 
+#### Example usage
+Make sure you have bob up to date
+
+You can either update to the latest `builder bob --update`
+
+or you can use a specific version `builder bob --set 1.2.130`
+
+Make sure your dependencies are up to date `builder resolve`
+
+Build the project `builder build . --platform android`, you only need to specify the project the first time or when switching platform.
+
+Install the project `builder install .` it will install a build for the project in the current folder
+
+You can automatically start the project with `builder start .` as well as get the logs with `builder listen .`
+
+A nifty trick is to chain the commands so it does it all in sequential order for you `builder build . && builder install . -f && builder start .`
 
 ### Config
 set is used for setting config values, it takes 2 arguments key and value.
