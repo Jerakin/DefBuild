@@ -29,7 +29,7 @@ Usage:
   builder.py [command] [arguments]
  
 Available Commands:
-  build              [project location]         Project location, use . for current folder
+  build              [project location]         Project location, use . for current directory
                      -p, --platform [arg]       For which platform you want to build ios/android
                      -q, --quick                Do a quickbuild by skipping distclean
                      -o, --options              Use a properties file to override or add values to the .project file
@@ -67,7 +67,7 @@ Make sure your dependencies are up to date `builder resolve`
 
 Build the project `builder build . --platform android`, you only need to specify the project the first time or when switching platform.
 
-Install the project `builder install .` it will install a build for the project in the current folder
+Install the project on your connected android `builder install .` it will install a build for the project correlating to the current directory
 
 You can automatically start the project with `builder start .` as well as get the logs with `builder listen .`
 
