@@ -1,4 +1,4 @@
-# [1.1.0](https://github.com/Jerakin/DefBuild/compare/release/1.0.1...release/1.1.0)
+# [1.1.1](https://github.com/Jerakin/DefBuild/compare/release/1.0.1...release/1.1.1)
 
 ### Added
 - [#7](https://github.com/Jerakin/DefBuild/issues/7) Can only resolve and build current directory
