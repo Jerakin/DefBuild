@@ -14,7 +14,13 @@ def build(project):
         logging.error("Can't find a bob version, download with 'builder bob --update'")
         sys.exit(1)
 
-    command = ["java", "-jar", project.bob, "--archive", "--platform", project.platform, "--texture-compression", "true", "--bundle-output", project.output]
+    os.chdir(project.source_directory)
+    command = ["java", "-jar", project.bob,
+               "--archive",
+               "--platform", project.platform,
+               "--texture-compression", "true",
+               "--bundle-output", project.output]
+
     bob_version = _bob.get_version_from_file_name(project.bob)
     if len(bob_version.split(".")) == 3 and StrictVersion(bob_version) >= StrictVersion("1.2.137"):
         if project.variant == "debug":
@@ -42,9 +48,14 @@ def build(project):
 
         command.extend(["--identity", project.identity, "-mp", project.provision])
 
+    if project.resolve:
+        logging.info("Resolving please supply your credentials")
+        user, pw = _get_user()
+        command.extend(["--email", user, "--auth", pw, "resolve"])
+
     if not project.quick:
         command.extend(["distclean"])
-        
+
     platform = "android" if project.platform == "armv7-android" else "ios" if project.platform == "armv7-darwin" else ""
     logging.info("Building project {} as {} for {}".format(project.name, project.variant, platform))
     logging.info("Using bob version {}".format(bob_version, project.variant))
@@ -157,5 +168,6 @@ def print_help():
     print("    uninstall  Uninstall the Defold project on a connected device")
     print("    bob        Update or set the version of bob that is used")
     print("    config     Update config values, used for setting up iOS Provisional Profiles\n"
-          "               and others\n")
+          "               and others")
+    print("    resolve    Resolve all external library dependencies\n")
     print("See `builder <command> --help' for information on a specific command.")

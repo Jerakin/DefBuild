@@ -22,16 +22,16 @@ except ImportError:
     logging.error("requests not found, install with `pip install requests`")
     sys.exit(1)
 
-__version__ = "1.0.2"
+__version__ = "1.1.0b1"
 
 
 class Project:
     def __init__(self, arguments):
         self.arguments = arguments
         _project_path = arguments.project if hasattr(arguments, 'project') and arguments.project else "."
-
+        self.source_directory = os.path.abspath(_project_path)
         self.cache_dir = os.path.join(os.path.expanduser("~"), ".builder", "cache")
-        self.project_file = _get_project_file(os.path.abspath(_project_path))
+        self.project_file = _get_project_file(self.source_directory)
         self.output = os.path.join(self.cache_dir, "output")
 
         self.platform = arguments.platform if hasattr(arguments, 'platform') else None
@@ -39,6 +39,7 @@ class Project:
         self.quick = arguments.quick if hasattr(arguments, 'quick') else None
         self.force = arguments.force if hasattr(arguments, 'force') else None
         self.variant = arguments.variant if hasattr(arguments, 'variant') else None
+        self.resolve = arguments.resolve if hasattr(arguments, 'resolve') else None
         self.name = None
         self.provision = None
         self.identity = None
@@ -170,24 +171,32 @@ def init():
     parser.add_argument('--version', action='version', version="DefBuild {}".format(__version__))
 
     sub_build = sub_parsers.add_parser("build", help="Build a Defold project")
-    sub_build.add_argument("project", help="working directory to project")
-    sub_build.add_argument("-p", "--platform", help="which platform to build, 'ios' or 'android'", dest="platform", choices=["android", "ios"])
+    sub_build.add_argument("project", help="source directory of project")
+    sub_build.add_argument("-p", "--platform", help="which platform to build, 'ios' or 'android'", dest="platform",
+                           choices=["android", "ios"])
     sub_build.add_argument("-q", "--quick", help="option to do a quick build by skipping distclean",
                            action='store_true', dest="quick")
     sub_build.add_argument("-o", "--options", help="Read options from properties file. Options specified on the "
                                                    "commandline will be given precedence over the ones read from "
                                                    "the properties file", dest="options")
-    sub_build.add_argument("-r", "--report", help="which platform to build, 'ios' or 'android'", action="store_true", dest="report")
-    sub_build.add_argument("--variant", help="specify debug or release of the engine", dest="variant", choices=["release", "debug"], default="debug")
+    sub_build.add_argument("-r", "--report", help="which platform to build, 'ios' or 'android'", action="store_true",
+                           dest="report")
+    sub_build.add_argument("--variant", help="specify debug or release of the engine", dest="variant",
+                           choices=["release", "debug"], default="debug")
+    sub_build.add_argument("--resolve", help="Resolve all external library dependencies", dest="resolve",
+                           action="store_true")
 
     sub_install = sub_parsers.add_parser("install", help="Install a project to a connected device")
     sub_install.add_argument("project", help="what to install", nargs="?")
-    sub_install.add_argument("-f", "--force", help="force installation by uninstalling first", action='store_true', dest="force")
-    sub_install.add_argument("-p", "--platform", help="which platform to install on, 'ios' or 'android'", nargs="?", dest="platform")
+    sub_install.add_argument("-f", "--force", help="force installation by uninstalling first", action='store_true',
+                             dest="force")
+    sub_install.add_argument("-p", "--platform", help="which platform to install on, 'ios' or 'android'", nargs="?",
+                             dest="platform")
 
     sub_uninstall = sub_parsers.add_parser("uninstall", help="Uninstall the Defold project on a connected device")
     sub_uninstall.add_argument("project", help="which app to uninstall", nargs="?")
-    sub_uninstall.add_argument("-p", "--platform", help="which platform to uninstall, 'ios' or 'android'", nargs="?", dest="platform")
+    sub_uninstall.add_argument("-p", "--platform", help="which platform to uninstall, 'ios' or 'android'", nargs="?",
+                               dest="platform")
 
     sub_parsers.add_parser("start")
 
