@@ -128,11 +128,17 @@ def listen(project):
         sys.exit(-1)
 
 
-def resolve(project):
+def _get_user():
     import getpass
     user = input("User: ")
     pw = getpass.getpass()
+    return user, pw
+
+
+def resolve(project):
+    user, pw = _get_user()
     command = ["java", "-jar", project.bob, "--email", user, "--auth", pw, "resolve"]
+    os.chdir(project.source_directory)
     call(command)
 
 

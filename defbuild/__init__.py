@@ -203,6 +203,7 @@ def init():
     sub_bob.add_argument("--set", help="download a specific version of bob", dest="set")
 
     sub_resolve = sub_parsers.add_parser("resolve")
+    sub_resolve.add_argument("project", help="source directory", nargs="?")
 
     input_args = parser.parse_args()
 
