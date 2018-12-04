@@ -122,6 +122,9 @@ def bob(project, options):
         if len(sha.split(".")) == 3:
             sha = _bob.get_sha_from_version(sha)
             _bob.update(project, sha, options.force)
+        elif sha == "beta":
+            sha, _ = _bob.beta()
+            _bob.update(project, sha, options.force)
     else:
         if not project.bob:
             logging.error("Can't find a bob version, download with 'builder bob --update'")

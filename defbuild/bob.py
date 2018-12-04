@@ -58,6 +58,11 @@ def download(cache, sha):
             f.write(r.content)
 
 
+def beta():
+    beta_info = requests.get("http://d.defold.com/beta/info.json").json()
+    return beta_info["sha1"], beta_info["version"]
+
+
 def warning(project):
     latest = requests.get("http://d.defold.com/stable/info.json").json()["sha1"]
     if latest not in project.bob:
@@ -70,6 +75,10 @@ def get_version_from_sha(sha):
     for x in json_data["versions"]:
         if x["sha1"] == sha:
             return x["version"]
+    beta_sha, beta_version = beta()
+    if beta_sha == sha:
+        logging.info("Using beta version")
+        return beta_version
     return "unknown"
 
 

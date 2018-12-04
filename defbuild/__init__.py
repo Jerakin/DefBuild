@@ -209,7 +209,8 @@ def init():
     sub_bob = sub_parsers.add_parser("bob", help="Update or set the version of bob that is used")
     sub_bob.add_argument("-u", "--update", help="update bob", action='store_true', dest="update")
     sub_bob.add_argument("-f", "--force", help="force download of bob", action='store_true', dest="force")
-    sub_bob.add_argument("--set", help="download a specific version of bob", dest="set")
+    sub_bob.add_argument("--set", help="download a specific version of bob, takes version number and 'beta'",
+                         dest="set")
 
     sub_resolve = sub_parsers.add_parser("resolve")
     sub_resolve.add_argument("project", help="source directory", nargs="?")
