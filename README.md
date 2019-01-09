@@ -1,6 +1,33 @@
 # DefBuild
 Builder is built by wrapping adb/idevicebuilder and storing some data locally.
 
+## But why?
+
+DefBuild enables you to easily build, install, uninstall and more for both Android and iOS with a simple unified interface.
+It also enables you to build with the specific Defold version you want. If you encounter a problem with the Defold version
+you are on you can easily build with an older one to see if the problem was in that version too, switching between versions
+is done lie this `builder bob --set 1.2.143`.
+
+It is very handy to uninstall, build and install from the same interface. Using DefBuild you don't need to remember all
+paths, Bundle Identifications and Package names.
+
+Instead of doing this where you have to remember all options, if they take a path or an id, which bob version you have 
+downloaded and so on
+```
+bob java -jar /Users/jerakin/Downloads/bob.jar --archive --platform armv7-android distclean build bundle
+adb uninstall com.example.todo
+adb install "./build/default/My Game.apk"
+```
+
+You can instead do this and builder will figure out the paths and identifiers for you, (if you do repeated build you 
+don't have to specify platform, it remembers last platform used)
+```
+builder build . -p android
+builder install .
+builder uninstall .
+```
+
+
 ## Getting started
 
 You will need some dependencies, if you are on mac they are easiy installed with brew.
@@ -65,13 +92,16 @@ or you can use a specific version `builder bob --set 1.2.130`
 
 Make sure your dependencies are up to date `builder resolve`
 
-Build the project `builder build . --platform android`, you only need to specify the project the first time or when switching platform.
+Build the project `builder build . --platform android`, you only need to specify the project the first time or when 
+switching platform.
 
-Install the project on your connected android `builder install .` it will install a build for the project correlating to the current directory
+Install the project on your connected android `builder install .` it will install a build for the project correlating to
+ the current directory
 
 You can automatically start the project with `builder start .` as well as get the logs with `builder listen .`
 
-A nifty trick is to chain the commands so it does it all in sequential order for you `builder build . && builder install . -f && builder start .`
+A nifty trick is to chain the commands so it does it all in sequential order for you 
+`builder build . && builder install . -f && builder start .`
 
 ### Config
 set is used for setting config values, it takes 2 arguments key and value.
