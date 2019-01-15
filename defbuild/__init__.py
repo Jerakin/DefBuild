@@ -22,7 +22,7 @@ except ImportError:
     logging.error("requests not found, install with `pip install requests`")
     sys.exit(1)
 
-__version__ = "1.1.2"
+__version__ = "1.1.3"
 
 
 class Project:
@@ -57,8 +57,7 @@ class Project:
             options_file = os.path.abspath(arguments.options)
             _merge_properties(self.project_file, options_file)
 
-        if arguments.command not in ["bob", "set"]:
-            self.load()
+        self.load()
 
     def load(self):
         config = self._load_config()
@@ -67,16 +66,16 @@ class Project:
         self.ios_id = game_config.get("ios", "bundle_identifier", fallback="com.example.todo")
         self.android_id = game_config.get("android", "bundle_identifier", fallback="com.example.todo")
 
-        self.bob = config.get("config", "bob", fallback=None)
-        self.identity = config.get("config", "identity", fallback=None)
-        self.provision = config.get("config", "provision", fallback=None)
+        self.bob = config.get("config", "bob", fallback="")
+        self.identity = config.get("config", "identity", fallback="")
+        self.provision = config.get("config", "provision", fallback="")
         self.output = config.get("config", "output") if config.has_option("config", "output") else self.output
 
         self.platform = self.platform if self.platform else config.get("config", "platform") if config.has_option(
             "config", "platform") else None
 
         self.platform = "armv7-android" if self.platform in ["android", "armv7-android"] else \
-            "armv7-darwin" if self.platform in ["ios", "armv7-darwin"] else None
+            "armv7-darwin" if self.platform in ["ios", "armv7-darwin"] else ""
 
         if not self.platform:
             logging.info("No platform found, specify ios or android")
@@ -84,8 +83,8 @@ class Project:
         if self.name not in config.sections():
             return
 
-        self.ios_build = config.get(self.name, "ios_build", fallback=None)
-        self.android_build = config.get(self.name, "android_build", fallback=None)
+        self.ios_build = config.get(self.name, "ios_build", fallback="")
+        self.android_build = config.get(self.name, "android_build", fallback="")
 
     def final(self):
         # Final clean up
