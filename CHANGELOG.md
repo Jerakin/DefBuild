@@ -1,9 +1,15 @@
+# [1.1.2](https://github.com/Jerakin/DefBuild/compare/release/1.1.1...release/1.1.2)
+
+### Changed
+- Doesn't load settings when doing bob or set command.
+
+
 # [1.1.1](https://github.com/Jerakin/DefBuild/compare/release/1.0.1...release/1.1.1)
 
 ### Added
 - [#7](https://github.com/Jerakin/DefBuild/issues/7) Can only resolve and build current directory
 - [#6](https://github.com/Jerakin/DefBuild/issues/6) Added option to resolve when building
-- [#5](https://github.com/Jerakin/DefBuild/issues/6) Posibility to use a beta version of bob
+- [#5](https://github.com/Jerakin/DefBuild/issues/6) Possibility to use a beta version of bob
 
 
 ----

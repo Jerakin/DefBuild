@@ -22,7 +22,7 @@ except ImportError:
     logging.error("requests not found, install with `pip install requests`")
     sys.exit(1)
 
-__version__ = "1.1.1"
+__version__ = "1.1.2"
 
 
 class Project:
@@ -57,7 +57,8 @@ class Project:
             options_file = os.path.abspath(arguments.options)
             _merge_properties(self.project_file, options_file)
 
-        self.load()
+        if arguments.command not in ["bob", "set"]:
+            self.load()
 
     def load(self):
         config = self._load_config()
@@ -78,8 +79,7 @@ class Project:
             "armv7-darwin" if self.platform in ["ios", "armv7-darwin"] else None
 
         if not self.platform:
-            logging.error("No platform found, specify ios or android")
-            sys.exit(1)
+            logging.info("No platform found, specify ios or android")
 
         if self.name not in config.sections():
             return
