@@ -112,7 +112,8 @@ def start(project):
         sys.exit(-1)
 
 
-def bob(project, options):
+def bob(config, options):
+    project = _bob.Project(config)
     if options.update:
         latest = requests.get("http://d.defold.com/stable/info.json").json()["sha1"]
         _bob.update(project, latest, options.force)
@@ -132,7 +133,7 @@ def bob(project, options):
         sha = project.bob.split("bob_")[-1].split(".jar")[0]
         version = _bob.get_version_from_sha(sha)
         logging.info("Using version '{}', sha1: {}\n".format(version, sha))
-
+    return project
 
 def listen(project):
     if project.platform == "armv7-android":

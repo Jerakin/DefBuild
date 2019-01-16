@@ -60,7 +60,7 @@ class Project:
         self.load()
 
     def load(self):
-        config = self._load_config()
+        config = _load_config()
         game_config = _load_game_config(self.project_file)
         self.name = game_config.get("project", "title")
         self.ios_id = game_config.get("ios", "bundle_identifier", fallback="com.example.todo")
@@ -96,7 +96,7 @@ class Project:
         self.save()
 
     def save(self):
-        config = self._load_config()
+        config = _load_config()
         if not config.has_section(self.name):
             config.add_section(self.name)
         config.set(self.name, "ios_id", self.ios_id)
@@ -117,21 +117,23 @@ class Project:
         with open(os.path.join(self.cache_dir, "session"), 'w') as f:
             config.write(f)
 
-    def _load_config(self):
-        path = os.path.join(self.cache_dir, "session")
-        if not os.path.exists(path):
-            if not os.path.exists(self.cache_dir):
-                os.makedirs(self.cache_dir, exist_ok=True)
 
-            config = configparser.RawConfigParser()
-            config.add_section('config')
+def _load_config():
+    cache_dir = os.path.join(os.path.expanduser("~"), ".builder", "cache")
+    path = os.path.join(cache_dir, "session")
+    if not os.path.exists(path):
+        if not os.path.exists(cache_dir):
+            os.makedirs(cache_dir, exist_ok=True)
 
-            with open(path, 'w') as f:
-                config.write(f)
+        config = configparser.RawConfigParser()
+        config.add_section('config')
 
-        config = configparser.ConfigParser()
-        config.read(path)
-        return config
+        with open(path, 'w') as f:
+            config.write(f)
+
+    config = configparser.ConfigParser()
+    config.read(path)
+    return config
 
 
 def _load_game_config(project_file):
@@ -221,26 +223,28 @@ def init():
 
 def run():
     options = init()
-    project = Project(options)
     try:
-        if options.command == "build":
-            commands.build(project)
-        elif options.command == "install":
-            commands.install(project)
-        elif options.command == "uninstall":
-            commands.uninstall(project)
-        elif options.command == "resolve":
-            commands.resolve(project)
-        elif options.command == "start":
-            commands.start(project)
-        elif options.command == "listen":
-            commands.listen(project)
-        elif options.command == "set":
-            commands.config_set(project, options)
-        elif options.command == "bob":
-            commands.bob(project, options)
+        if options.command == "bob":
+            config = _load_config()
+            project = commands.bob(config, options)
         else:
-            commands.print_help()
+            project = Project(options)
+            if options.command == "build":
+                commands.build(project)
+            elif options.command == "install":
+                commands.install(project)
+            elif options.command == "uninstall":
+                commands.uninstall(project)
+            elif options.command == "resolve":
+                commands.resolve(project)
+            elif options.command == "start":
+                commands.start(project)
+            elif options.command == "listen":
+                commands.listen(project)
+            elif options.command == "set":
+                commands.config_set(project, options)
+            else:
+                commands.print_help()
     finally:
         project.final()
 

@@ -7,6 +7,19 @@ import logging
 DEFOLD_VERSION_URL = "https://gist.githubusercontent.com/Jerakin/801f6a71121095c467eaae9689d41828/raw/"
 
 
+class Project:
+    def __init__(self, config):
+        self.config = config
+        self.cache_dir = os.path.join(os.path.expanduser("~"), ".builder", "cache")
+        self.bob = config.get("config", "bob", fallback="")
+
+    def final(self):
+        self.config.set("config", "bob", self.bob)
+
+        with open(os.path.join(self.cache_dir, "session"), 'w') as f:
+            self.config.write(f)
+
+
 def exists(project, sha):
     target = os.path.join(project.cache_dir, "bob", "bob_{}.jar".format(sha))
     if os.path.exists(target):
