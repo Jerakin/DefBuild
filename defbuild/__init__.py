@@ -22,7 +22,7 @@ except ImportError:
     logging.error("requests not found, install with `pip install requests`")
     sys.exit(1)
 
-__version__ = "1.1.3"
+__version__ = "1.1.4"
 
 
 class Project:

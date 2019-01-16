@@ -1,7 +1,7 @@
-# [1.1.2](https://github.com/Jerakin/DefBuild/compare/release/1.1.1...release/1.1.2)
+# [1.1.4](https://github.com/Jerakin/DefBuild/compare/release/1.1.1...release/1.1.4)
 
 ### Changed
-- Doesn't load settings when doing bob or set command.
+- [#8](https://github.com/Jerakin/DefBuild/issues/8) Doesn't load settings when doing bob or set command.
 
 
 # [1.1.1](https://github.com/Jerakin/DefBuild/compare/release/1.0.1...release/1.1.1)
