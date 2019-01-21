@@ -22,7 +22,7 @@ except ImportError:
     logging.error("requests not found, install with `pip install requests`")
     sys.exit(1)
 
-__version__ = "1.1.4"
+__version__ = "1.1.5"
 
 
 class Project:
@@ -64,7 +64,7 @@ class Project:
         game_config = _load_game_config(self.project_file)
         self.name = game_config.get("project", "title")
         self.ios_id = game_config.get("ios", "bundle_identifier", fallback="com.example.todo")
-        self.android_id = game_config.get("android", "bundle_identifier", fallback="com.example.todo")
+        self.android_id = game_config.get("android", "package", fallback="com.example.todo")
 
         self.bob = config.get("config", "bob", fallback="")
         self.identity = config.get("config", "identity", fallback="")

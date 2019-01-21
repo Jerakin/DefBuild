@@ -1,3 +1,8 @@
+# [1.1.5](https://github.com/Jerakin/DefBuild/compare/release/1.1.4...release/1.1.5)
+
+### Changed
+- [#11](https://github.com/Jerakin/DefBuild/issues/11) Doesn't detect Android package name
+
 # [1.1.4](https://github.com/Jerakin/DefBuild/compare/release/1.1.1...release/1.1.4)
 
 ### Changed
