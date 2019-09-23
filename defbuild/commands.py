@@ -126,6 +126,8 @@ def bob(config, options):
         elif sha == "beta":
             sha, _ = _bob.beta()
             _bob.update(project, sha, options.force)
+        else:
+            _bob.update(project, sha, options.force)
     else:
         if not project.bob:
             logging.error("Can't find a bob version, download with 'builder bob --update'")
@@ -134,6 +136,7 @@ def bob(config, options):
         version = _bob.get_version_from_sha(sha)
         logging.info("Using version '{}', sha1: {}\n".format(version, sha))
     return project
+
 
 def listen(project):
     if project.platform == "armv7-android":

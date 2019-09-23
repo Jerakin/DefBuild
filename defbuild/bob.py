@@ -42,7 +42,7 @@ def update(project, sha, force):
 
 def download(cache, sha):
     if requests.head("http://d.defold.com/archive/{}/bob/bob.jar".format(sha)).status_code > 400:
-        logging.error("Can't find version {} of bob, supply valid version".format(sha))
+        logging.error("Can't find bob version {}".format(sha))
         sys.exit(1)
 
     logging.info("Downloading new bob {}".format(get_version_from_sha(sha)))
