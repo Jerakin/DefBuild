@@ -31,6 +31,7 @@ setup(
     version=find_version("defbuild/__init__.py"),
     description='Commandline tool for building for Defold',
     long_description=long_description,
+    long_description_content_type="text/markdown",
     url='',
     author='Mattias.Hedberg',
     author_email='hedberg.a.mattias@gmail.com',
