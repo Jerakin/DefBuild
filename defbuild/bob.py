@@ -2,9 +2,7 @@ import os
 import sys
 import requests
 import logging
-
-
-DEFOLD_VERSION_URL = "https://gist.githubusercontent.com/Jerakin/801f6a71121095c467eaae9689d41828/raw/"
+import defbuild.versions as versions
 
 
 class Project:
@@ -72,19 +70,11 @@ def download(cache, sha):
 
 
 def beta():
-    beta_info = requests.get("http://d.defold.com/beta/info.json").json()
-    return beta_info["sha1"], beta_info["version"]
-
-
-def warning(project):
-    latest = requests.get("http://d.defold.com/stable/info.json").json()["sha1"]
-    if latest not in project.bob:
-        logging.info(
-            "bob is out of date update with 'builder bob --update'")
+    return versions.beta()
 
 
 def get_version_from_sha(sha):
-    json_data = requests.get(DEFOLD_VERSION_URL).json()
+    json_data = versions.get(True)
     for x in json_data["versions"]:
         if x["sha1"] == sha:
             return x["version"]
@@ -96,7 +86,7 @@ def get_version_from_sha(sha):
 
 
 def get_sha_from_version(version):
-    json_data = requests.get(DEFOLD_VERSION_URL).json()
+    json_data = versions.get(True)
     for x in json_data["versions"]:
         if x["version"] == version:
             return x["sha1"]
