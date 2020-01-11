@@ -51,7 +51,7 @@ setup(
         'Programming Language :: Python :: 3.6',
     ],
     entry_points={
-        'console_scripts': ['builder=defbuild:main'],
+        'console_scripts': ['defbuild=defbuild:main'],
     },
     install_requires=[
         'requests'
