@@ -1,3 +1,9 @@
+# [2.0.0](https://github.com/Jerakin/DefBuild/compare/release/1.1.5...release/2.0.0)
+
+### Changes
+- [#11](https://github.com/Jerakin/DefBuild/issues/1) Using an invalid project location crashes
+- Renamed the command from builder to defbuild, to avoid confusion and decrease name clash.
+
 # [1.1.5](https://github.com/Jerakin/DefBuild/compare/release/1.1.4...release/1.1.5)
 
 ### Changed

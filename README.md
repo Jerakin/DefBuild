@@ -1,12 +1,12 @@
 # DefBuild
-Builder is built by wrapping adb/idevicebuilder and storing some data locally.
+defbuild is built by wrapping adb/idevicedefbuild and storing some data locally.
 
 ## But why?
 
 DefBuild enables you to easily build, install, uninstall and more for both Android and iOS with a simple unified interface.
 It also enables you to build with the specific Defold version you want. If you encounter a problem with the Defold version
 you are on you can easily build with an older one to see if the problem was in that version too, switching between versions
-is done lie this `builder bob --set 1.2.143`.
+is done lie this `defbuild bob --set 1.2.143`.
 
 It is very handy to uninstall, build and install from the same interface. Using DefBuild you don't need to remember all
 paths, Bundle Identifications and Package names.
@@ -19,12 +19,12 @@ adb uninstall com.example.todo
 adb install "./build/default/My Game.apk"
 ```
 
-You can instead do this and builder will figure out the paths and identifiers for you, (if you do repeated build you 
+You can instead do this and defbuild will figure out the paths and identifiers for you, (if you do repeated build you 
 don't have to specify platform, it remembers last platform used)
 ```
-builder build . -p android
-builder install .
-builder uninstall .
+defbuild build . -p android
+defbuild install .
+defbuild uninstall .
 ```
 
 
@@ -50,10 +50,10 @@ If you prefer you can clone and build the project yourself
 
 
 ## Usage
-Builder installs itself as a command, run it with "builder command arguments"
+defbuild installs itself as a command, run it with "defbuild command arguments"
 ```
 Usage:
-  builder.py [command] [arguments]
+  defbuild.py [command] [arguments]
  
 Available Commands:
   build              [project location]         Project location, use . for current directory
@@ -86,22 +86,22 @@ Available Commands:
 #### Example usage
 Make sure you have bob up to date
 
-You can either update to the latest `builder bob --update`
+You can either update to the latest `defbuild bob --update`
 
-or you can use a specific version `builder bob --set 1.2.130`
+or you can use a specific version `defbuild bob --set 1.2.130`
 
-Make sure your dependencies are up to date `builder resolve`
+Make sure your dependencies are up to date `defbuild resolve`
 
-Build the project `builder build . --platform android`, you only need to specify the project the first time or when 
+Build the project `defbuild build . --platform android`, you only need to specify the project the first time or when 
 switching platform.
 
-Install the project on your connected android `builder install .` it will install a build for the project correlating to
+Install the project on your connected android `defbuild install .` it will install a build for the project correlating to
  the current directory
 
-You can automatically start the project with `builder start .` as well as get the logs with `builder listen .`
+You can automatically start the project with `defbuild start .` as well as get the logs with `defbuild listen .`
 
 A nifty trick is to chain the commands so it does it all in sequential order for you 
-`builder build . && builder install . -f && builder start .`
+`defbuild build . && defbuild install . -f && defbuild start .`
 
 ### Config
 set is used for setting config values, it takes 2 arguments key and value.
@@ -111,6 +111,6 @@ If you want to install and uninstall on iPhone both 'identity' and 'provision' n
 
 ```
 Usage:
-  builder config identity 'iPhone Dev: Me'
-  builder config provision path/to/provision/game.mobileprovision
+  defbuild config identity 'iPhone Dev: Me'
+  defbuild config provision path/to/provision/game.mobileprovision
 ```
