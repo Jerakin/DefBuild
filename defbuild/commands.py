@@ -13,6 +13,8 @@ def build(project):
     if not project.bob:
         logging.error("Can't find a bob version, download with 'builder bob --update'")
         sys.exit(1)
+    if project.verbose:
+        logging.basicConfig(level=logging.DEBUG)
 
     os.chdir(project.source_directory)
     command = ["java", "-jar", project.bob,
@@ -33,7 +35,6 @@ def build(project):
 
     if project.report:
         command.extend(["--build-report-html", os.path.join(project.cache_dir, "report.html")])
-
     if project.platform == "armv7-android":
         project.android_build = os.path.join(project.output, project.name, "{}.apk".format(project.name))
         if project.certificate and project.private_key:
@@ -64,6 +65,7 @@ def build(project):
 
     command.extend(["build", "bundle"])
     start_time = time.time()
+    logging.info("Using command: '{}'".format(" ".join(command)))
     call(command)
     m, s = divmod(time.time() - start_time, 60)
     logging.info("Building done in {:.0f}:{:.0f}".format(m, s))
