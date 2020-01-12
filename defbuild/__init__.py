@@ -22,7 +22,7 @@ except ImportError:
     logging.error("requests not found, install with `pip install requests`")
     sys.exit(1)
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 
 
 class Project:
@@ -43,6 +43,8 @@ class Project:
         self.name = None
         self.provision = None
         self.identity = None
+        self.certificate = None
+        self.private_key = None
         self.bob = None
 
         self.ios_id = None
@@ -69,6 +71,11 @@ class Project:
         self.bob = config.get("config", "bob", fallback="")
         self.identity = config.get("config", "identity", fallback="")
         self.provision = config.get("config", "provision", fallback="")
+        cert_name = config.get(self.name, "certificate", fallback=None)
+        self.certificate = cert_name if cert_name else config.get("config", "certificate", fallback="")
+        pk_name = config.get(self.name, "private-key", fallback=None)
+        self.private_key = pk_name if pk_name else config.get("config", "private-key", fallback="")
+
         self.output = config.get("config", "output") if config.has_option("config", "output") else self.output
 
         self.platform = self.platform if self.platform else config.get("config", "platform") if config.has_option(
@@ -182,6 +189,7 @@ def init():
                                                    "the properties file", dest="options")
     sub_build.add_argument("-r", "--report", help="which platform to build, 'ios' or 'android'", action="store_true",
                            dest="report")
+
     sub_build.add_argument("--variant", help="specify debug or release of the engine", dest="variant",
                            choices=["release", "debug"], default="debug")
     sub_build.add_argument("--resolve", help="Resolve all external library dependencies", dest="resolve",

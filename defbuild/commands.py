@@ -36,6 +36,8 @@ def build(project):
 
     if project.platform == "armv7-android":
         project.android_build = os.path.join(project.output, project.name, "{}.apk".format(project.name))
+        if project.certificate and project.private_key:
+            command.extend(["--certificate", project.certificate, "--private-key", project.private_key])
     else:
         project.ios_build = os.path.join(project.output, "{}.ipa".format(project.name))
         if not project.identity:
